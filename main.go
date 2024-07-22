@@ -17,6 +17,8 @@ func main() {
 	}
 	http.HandleFunc("/", utils.ServeIndex)
 	http.HandleFunc("/ascii-art", utils.GenerateASCIIArt)
+	http.HandleFunc("/error", utils.ServeError)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	port := ":8000"
 	portNum, err := strconv.Atoi(port[1:])

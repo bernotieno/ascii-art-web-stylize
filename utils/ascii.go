@@ -6,6 +6,34 @@ import (
 	"text/template"
 )
 
+func ServeErrorPage(w http.ResponseWriter, r *http.Request, errorCode int) {
+	// if r.Method != http.MethodGet {
+	// 	http.Redirect(w, r, "/error?code=405", http.StatusSeeOther)
+	// 	return
+	// }
+
+	var templateFile string
+	switch errorCode {
+	case http.StatusBadRequest:
+		templateFile = "templates/error400.html"
+	case http.StatusNotFound:
+		templateFile = "templates/error404.html"
+	case http.StatusMethodNotAllowed:
+		templateFile = "templates/error405.html"
+	case http.StatusInternalServerError:
+		templateFile = "templates/error500.html"
+	default:
+		templateFile = "templates/error500.html"
+	}
+
+	tmpl := template.Must(template.ParseFiles(templateFile))
+	w.WriteHeader(errorCode)
+	if err := tmpl.Execute(w, nil); err != nil {
+		log.Printf("Error rendering error template: %v", err)
+		http.Error(w, "500 Internal Server Error", http.StatusInternalServerError)
+	}
+}
+
 // ServeIndex handles GET requests to the root URL
 func ServeIndex(w http.ResponseWriter, r *http.Request) {
 	// Check if the request method is GET
@@ -18,61 +46,67 @@ func ServeIndex(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "templates/index.html")
 	} else {
 		// Return a 404 error for any other path
-		http.NotFound(w, r)
+		ServeErrorPage(w, r, http.StatusNotFound)
 	}
 }
 
 // GenerateASCIIArt handles POST requests to generate ASCII art
 func GenerateASCIIArt(w http.ResponseWriter, r *http.Request) {
-	// Check if the request method is POST
 	if r.Method != http.MethodPost {
-		http.Error(w, "405 Method Not Allowed", http.StatusMethodNotAllowed)
+		ServeErrorPage(w, r, http.StatusMethodNotAllowed)
 		return
 	}
 
-	// Get the input text and banner type from the form data
 	input := r.FormValue("input")
 	banner := r.FormValue("banner")
 
-	// Validate that input text is provided
 	if input == "" || banner == "" {
-		http.Error(w, "400 Bad Request", http.StatusBadRequest)
+		ServeErrorPage(w, r, http.StatusBadRequest)
 		return
 	}
 
-	// Read the ASCII map file based on the banner type
 	content, err := ReadsFile(GetFile(banner))
 	if err != nil {
 		log.Printf("Error reading ASCII map: %v", err)
-		http.Error(w, "500 Internal Server Error", http.StatusInternalServerError)
+		ServeErrorPage(w, r, http.StatusInternalServerError)
 		return
 	}
 
-	// Split the content of the file into lines
 	contentLines := SplitFile(string(content))
 
-	// Generate the ASCII art from the input text and the content lines
 	art, err := DisplayText(input, contentLines)
 	if err != nil {
-		http.Error(w, "400 Bad Request", http.StatusBadRequest)
+		ServeErrorPage(w, r, http.StatusBadRequest)
 		return
 	}
 
-	// Define the data to be passed to the template
 	data := struct {
 		Art, Input string
 	}{
 		Input: input,
-		Art: art,
+		Art:   art,
 	}
 
-	// Parse the result HTML template at initialization
 	resultTemplate := template.Must(template.ParseFiles("templates/result.html"))
-
-	// Render the result template with the generated ASCII art
 	if err := resultTemplate.Execute(w, data); err != nil {
 		log.Printf("Error rendering template: %v", err)
-		http.Error(w, "500 Internal Server Error", http.StatusInternalServerError)
-		return
+		ServeErrorPage(w, r, http.StatusInternalServerError)
+	}
+}
+
+// ServeError handles GET requests to the /error URL
+func ServeError(w http.ResponseWriter, r *http.Request) {
+	code := r.URL.Query().Get("code")
+	switch code {
+	case "400":
+		ServeErrorPage(w, r, http.StatusBadRequest)
+	case "404":
+		ServeErrorPage(w, r, http.StatusNotFound)
+	case "405":
+		ServeErrorPage(w, r, http.StatusMethodNotAllowed)
+	case "500":
+		ServeErrorPage(w, r, http.StatusInternalServerError)
+	default:
+		ServeErrorPage(w, r, http.StatusInternalServerError)
 	}
 }

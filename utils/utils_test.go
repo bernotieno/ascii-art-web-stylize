@@ -1,7 +1,7 @@
 package utils_test
 
 import (
-	"ascii-art/utils"
+	"ascii-art-web-stylize/utils"
 	"net/http"
 	"net/http/httptest"
 	"os"

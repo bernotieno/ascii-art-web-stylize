@@ -6,12 +6,8 @@ import (
 	"text/template"
 )
 
+// ServeErrorPage serves error pages based on the provided error code.
 func ServeErrorPage(w http.ResponseWriter, r *http.Request, errorCode int) {
-	// if r.Method != http.MethodGet {
-	// 	http.Redirect(w, r, "/error?code=405", http.StatusSeeOther)
-	// 	return
-	// }
-
 	var templateFile string
 	switch errorCode {
 	case http.StatusBadRequest:
@@ -34,23 +30,29 @@ func ServeErrorPage(w http.ResponseWriter, r *http.Request, errorCode int) {
 	}
 }
 
-// ServeIndex handles GET requests to the root URL
+// ServeIndex handles GET requests to the root URL.
 func ServeIndex(w http.ResponseWriter, r *http.Request) {
-	// Check if the request method is GET
 	if r.Method != http.MethodGet {
 		http.Error(w, "400 Bad Request", http.StatusBadRequest)
 		return
 	}
-	// Serve the index HTML file if the URL path is "/"
 	if r.URL.Path == "/" {
 		http.ServeFile(w, r, "templates/index.html")
 	} else {
-		// Return a 404 error for any other path
 		ServeErrorPage(w, r, http.StatusNotFound)
 	}
 }
 
-// GenerateASCIIArt handles POST requests to generate ASCII art
+// ServeAbout handles GET requests to the /about URL.
+func ServeAbout(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		ServeErrorPage(w, r, http.StatusMethodNotAllowed)
+		return
+	}
+	http.ServeFile(w, r, "templates/about.html")
+}
+
+// GenerateASCIIArt handles POST requests to generate ASCII art.
 func GenerateASCIIArt(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		ServeErrorPage(w, r, http.StatusMethodNotAllowed)
@@ -94,7 +96,7 @@ func GenerateASCIIArt(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// ServeError handles GET requests to the /error URL
+// ServeError handles GET requests to the /error URL.
 func ServeError(w http.ResponseWriter, r *http.Request) {
 	code := r.URL.Query().Get("code")
 	switch code {

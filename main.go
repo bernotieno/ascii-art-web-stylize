@@ -18,12 +18,13 @@ func main() {
 	http.HandleFunc("/", utils.ServeIndex)
 	http.HandleFunc("/ascii-art", utils.GenerateASCIIArt)
 	http.HandleFunc("/error", utils.ServeError)
+	http.HandleFunc("/about", utils.ServeAbout)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	port := ":8000"
 	portNum, err := strconv.Atoi(port[1:])
 	if err != nil {
-		fmt.Printf("Error: Unable to covert %v to integer\n", port[1:])
+		fmt.Printf("Error: Unable to convert %v to integer\n", port[1:])
 		return
 	}
 	if portNum < 1024 || portNum > 65535 {

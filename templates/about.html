@@ -4,99 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About ASCII Art Web</title>
-    <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-.container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
-}
-h1 {
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-form {
-    width: 100%;
-}
-fieldset {
-    border: none;
-    padding: 0;
-    margin: 0 0 20px;
-}
-legend {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-}
-label {
-    display: block;
-    margin-bottom: 5px;
-    color: #555;
-}
-textarea, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-button {
-    width: 100%;
-    padding: 10px;
-    background: #007BFF;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 1em;
-    cursor: pointer;
-}
-button:hover {
-    background: #0056b3;
-}
-    </style>
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
     <header>
-        <div class="container">
-            <h1>ASCII Art Web</h1>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                </ul>
-            </nav>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about" class="active">About</a></li>
+            </ul>
+        </nav>
     </header>
-
-    <div class="container main-content">
-        <h2>About ASCII Art Web</h2>
-        <p>Welcome to ASCII Art Web, an online tool that converts text into beautiful ASCII art! The project is an extension of a previous ASCII art generator, now enhanced with a web interface for easy access and use.</p>
-
-        <h3>Features</h3>
-        <ul>
-            <li>Convert text into ASCII art using various banners such as 'standard', 'shadow', and 'thinkertoy'.</li>
-            <li>Simple and intuitive web interface for easy input and output of ASCII art.</li>
-            <li>Supports different styles and formats of ASCII art.</li>
-            <li>Displays error messages on a dedicated page for better user experience.</li>
-        </ul>
-
-        <h3>How It Works</h3>
-        <p>To use the ASCII Art Web tool, simply navigate to the home page, enter your desired text, select a banner style, and click the "Generate" button. The generated ASCII art will be displayed on a different page. If there are any errors (e.g., unsupported characters), an appropriate error message will also be shown on a different page.</p>
-
-        <h3>Authors</h3>
-        <p>The project was created by Benard and Moses, who are passionate about combining programming with creativity. They have developed this tool to make ASCII art generation accessible and fun for everyone.</p>
-    </div>
+    <main>
+        <h1>About ASCII Art Web</h1>
+        <section>
+            <h2>What is ASCII Art Web?</h2>
+            <p>ASCII Art Web is an online tool that converts text into beautiful ASCII art. It's designed to be simple, fun, and accessible to everyone.</p>
+        </section>
+        <section>
+            <h2>Features</h2>
+            <ul>
+                <li>Convert text to ASCII art</li>
+                <li>Multiple banner styles</li>
+                <li>Easy-to-use interface</li>
+                <li>Responsive design</li>
+            </ul>
+        </section>
+        <section>
+            <h2>How to Use</h2>
+            <ol>
+                <li>Go to the home page</li>
+                <li>Enter your text</li>
+                <li>Choose a banner style</li>
+                <li>Click "Generate ASCII Art"</li>
+                <li>Enjoy your ASCII art creation!</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Creators</h2>
+            <p>ASCII Art Web was created by Benard and Moses, two developers passionate about combining programming with creativity.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 ASCII Art Web. All rights reserved.</p>
+    </footer>
 </body>
 </html>

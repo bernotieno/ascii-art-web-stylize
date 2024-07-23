@@ -1,4 +1,4 @@
-# ASCII Art Web
+# ASCII Art Web Stylize
 
 ASCII Art Web is a Go project that allows users to generate ASCII art from input text using various predefined banners through a web interface.
 

@@ -8,7 +8,8 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #ccc; /* Light text color for dark background */
+    background-color: #121212; /* Dark background color */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -16,7 +17,7 @@ body {
 
 /* Header and navigation */
 header {
-    background-color: #f4f4f4;
+    background-color: #1e1e1e; /* Darker header background */
     padding: 1rem;
 }
 
@@ -32,7 +33,7 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: #333;
+    color: #ccc; /* Light text color for links */
     font-weight: bold;
 }
 
@@ -72,8 +73,10 @@ label {
 textarea, select {
     margin-bottom: 1rem;
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: 1px solid #333; /* Dark border */
     border-radius: 4px;
+    background-color: #333; /* Dark input background */
+    color: #ccc; /* Light text color */
 }
 
 button, .button {
@@ -96,16 +99,16 @@ button:hover, .button:hover {
 
 /* Result page styles */
 .result-container {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #1e1e1e; /* Darker result container background */
+    border: 1px solid #333; /* Dark border */
     border-radius: 4px;
     padding: 1rem;
     margin-bottom: 1rem;
 }
 
 pre, .scrollable-result {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: #1e1e1e; /* Darker pre background */
+    border: 1px solid #333; /* Dark border */
     border-radius: 4px;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -118,11 +121,12 @@ pre, .scrollable-result {
 .art {
     font-family: monospace;
     white-space: pre;
+    color: #ccc; /* Light text color for art */
 }
 
 /* Footer */
 footer {
-    background-color: #f4f4f4;
+    background-color: #1e1e1e; /* Darker footer background */
     text-align: center;
     padding: 1rem;
     margin-top: auto;
@@ -147,8 +151,8 @@ footer {
         max-height: 300px;
     }
 }
-/* Add these styles to your existing styles.css file */
 
+/* Contributor section */
 .contributors {
     display: flex;
     justify-content: center;

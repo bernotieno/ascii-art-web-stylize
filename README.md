@@ -1,6 +1,6 @@
 # ASCII Art Web Stylize
 
-ASCII Art Web is a Go project that allows users to generate ASCII art from input text using various predefined banners through a web interface.
+ASCII Art Web Stylize is a Go project that allows users to generate ASCII art from input text using various predefined banners through a stylized web interface.
 
 ## Table of Contents
 - `Introduction`
@@ -13,7 +13,7 @@ ASCII Art Web is a Go project that allows users to generate ASCII art from input
 
 ## Introduction
 
-ASCII Art Web provides a simple web interface to convert input text into ASCII art using different banner styles such as 'standard', 'shadow', and 'thinkertoy'. The project utilizes Go's HTTP package to handle requests and templates for rendering HTML responses.
+ASCII Art Web Stylize provides a simple web interface to convert input text into ASCII art using different banner styles such as 'standard', 'shadow', and 'thinkertoy'. The project utilizes Go's HTTP package to handle requests and templates for rendering HTML responses. The web page is maintained and styled using css.
 
 ## Features
 
@@ -38,8 +38,8 @@ ASCII Art Web provides a simple web interface to convert input text into ASCII a
 2. **Clone the repository:**
 
    ```bash
-   git clone https://learn.zone01kisumu.ke/git/moonyango/ascii-art-web.git
-   cd ascii-art-web
+   git clone https://learn.zone01kisumu.ke/git/bernaotieno/ascii-art-web-stylize
+   cd ascii-art-web-stylize
    ```
 
  ## Usage

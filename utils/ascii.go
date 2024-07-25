@@ -1,9 +1,9 @@
 package utils
 
 import (
+	"html/template"
 	"log"
 	"net/http"
-	"text/template"
 )
 
 // ServeErrorPage serves error pages based on the provided error code.

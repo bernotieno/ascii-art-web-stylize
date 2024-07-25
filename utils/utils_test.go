@@ -1,12 +1,13 @@
 package utils_test
 
 import (
-	"ascii-art-web-stylize/utils"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"strings"
 	"testing"
+
+	"ascii-art-web-stylize/utils"
 )
 
 func TestPrintWord(t *testing.T) {
@@ -186,8 +187,8 @@ func TestGenerateASCIIArt(t *testing.T) {
 		expectedBody   string
 	}{
 		{"Invalid Method", http.MethodGet, "", "", http.StatusMethodNotAllowed, ""},
-		{"Empty Input", http.MethodPost, "", "standard", http.StatusBadRequest, "Input is required"},
-		{"Invalid Banner", http.MethodPost, "Hello", "invalid", http.StatusInternalServerError, "Error reading ASCII map"},
+		{"Empty Input", http.MethodPost, "", "standard", http.StatusBadRequest, "400 Bad Request"},
+		{"Invalid Banner", http.MethodPost, "Hello", "invalid", http.StatusInternalServerError, "500 Internal Server Error"},
 	}
 
 	for _, tt := range tests {
@@ -212,6 +213,138 @@ func TestGenerateASCIIArt(t *testing.T) {
 			if tt.expectedBody != "" && !strings.Contains(rr.Body.String(), tt.expectedBody) {
 				t.Errorf("handler returned unexpected body: got %v want %v",
 					rr.Body.String(), tt.expectedBody)
+			}
+		})
+	}
+}
+
+func TestServeErrorPage(t *testing.T) {
+	type args struct {
+		w         http.ResponseWriter
+		r         *http.Request
+		errorCode int
+	}
+	tests := []struct {
+		name         string
+		args         args
+		expectedCode int
+	}{
+		{
+			name: "BadRequest",
+			args: args{
+				w:         httptest.NewRecorder(),
+				r:         httptest.NewRequest(http.MethodGet, "/", nil),
+				errorCode: http.StatusBadRequest,
+			},
+			expectedCode: http.StatusBadRequest,
+		},
+		{
+			name: "NotFound",
+			args: args{
+				w:         httptest.NewRecorder(),
+				r:         httptest.NewRequest(http.MethodGet, "/", nil),
+				errorCode: http.StatusNotFound,
+			},
+			expectedCode: http.StatusNotFound,
+		},
+		{
+			name: "MethodNotAllowed",
+			args: args{
+				w:         httptest.NewRecorder(),
+				r:         httptest.NewRequest(http.MethodGet, "/", nil),
+				errorCode: http.StatusMethodNotAllowed,
+			},
+			expectedCode: http.StatusMethodNotAllowed,
+		},
+		{
+			name: "InternalServerError",
+			args: args{
+				w:         httptest.NewRecorder(),
+				r:         httptest.NewRequest(http.MethodGet, "/", nil),
+				errorCode: http.StatusInternalServerError,
+			},
+			expectedCode: http.StatusInternalServerError,
+		},
+		{
+			name: "DefaultCase",
+			args: args{
+				w:         httptest.NewRecorder(),
+				r:         httptest.NewRequest(http.MethodGet, "/", nil),
+				errorCode: 500,
+			},
+			expectedCode: http.StatusInternalServerError,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			utils.ServeErrorPage(tt.args.w, tt.args.r, tt.args.errorCode)
+
+			rr := tt.args.w.(*httptest.ResponseRecorder)
+			if status := rr.Code; status != tt.expectedCode {
+				t.Errorf("ServeErrorPage() = %v, want %v", status, tt.expectedCode)
+			}
+		})
+	}
+}
+
+func TestServeError(t *testing.T) {
+	type args struct {
+		w http.ResponseWriter
+		r *http.Request
+	}
+	tests := []struct {
+		name         string
+		args         args
+		expectedCode int
+	}{
+		{
+			name: "BadRequest",
+			args: args{
+				w: httptest.NewRecorder(),
+				r: httptest.NewRequest(http.MethodGet, "/?code=400", nil),
+			},
+			expectedCode: http.StatusBadRequest,
+		},
+		{
+			name: "NotFound",
+			args: args{
+				w: httptest.NewRecorder(),
+				r: httptest.NewRequest(http.MethodGet, "/?code=404", nil),
+			},
+			expectedCode: http.StatusNotFound,
+		},
+		{
+			name: "MethodNotAllowed",
+			args: args{
+				w: httptest.NewRecorder(),
+				r: httptest.NewRequest(http.MethodGet, "/?code=405", nil),
+			},
+			expectedCode: http.StatusMethodNotAllowed,
+		},
+		{
+			name: "InternalServerError",
+			args: args{
+				w: httptest.NewRecorder(),
+				r: httptest.NewRequest(http.MethodGet, "/?code=500", nil),
+			},
+			expectedCode: http.StatusInternalServerError,
+		},
+		{
+			name: "DefaultCase",
+			args: args{
+				w: httptest.NewRecorder(),
+				r: httptest.NewRequest(http.MethodGet, "/?code=999", nil),
+			},
+			expectedCode: http.StatusInternalServerError,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			utils.ServeError(tt.args.w, tt.args.r)
+
+			rr := tt.args.w.(*httptest.ResponseRecorder)
+			if status := rr.Code; status != tt.expectedCode {
+				t.Errorf("ServeError() = %v, want %v", status, tt.expectedCode)
 			}
 		})
 	}

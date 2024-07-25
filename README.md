@@ -3,13 +3,13 @@
 ASCII Art Web Stylize is a Go project that allows users to generate ASCII art from input text using various predefined banners through a stylized web interface.
 
 ## Table of Contents
-- `Introduction`
-- `Features`
-- `Project Structure`
-- `Installation`
-- `Usage`
-- `Algorithm`
-- `Contributing`
+- [Introduction](#introduction)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Algorithm](#usage)
+- [Contributing](#contributing)
 
 ## Introduction
 

@@ -59,6 +59,15 @@ Open a web browser and go to http://localhost:8000.
     * Select a banner style ('standard', 'shadow', 'thinkertoy').
     * Click on the 'Generate' button to see the ASCII art based on your input.
 
+### Example
+
+![Input Form](static/images/screenshots/input_form.png)
+*Input your text and select a banner style.*
+
+
+![Generated Art](static/images/screenshots/generated_art.png)
+*View the generated ASCII art.*
+
 ## ALGORITHM ASCII Art Web Generator
 
 ### FUNCTION ServeIndex(request, response):

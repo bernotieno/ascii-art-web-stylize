@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 )
 
 // ServeErrorPage serves error pages based on the provided error code.
@@ -41,6 +42,21 @@ func ServeIndex(w http.ResponseWriter, r *http.Request) {
 	} else {
 		ServeErrorPage(w, r, http.StatusNotFound)
 	}
+}
+
+func StaticServer(w http.ResponseWriter, r *http.Request) {
+	filePath := "." + r.URL.Path
+	info, err := os.Stat(filePath)
+	if err != nil {
+		ServeErrorPage(w, r, http.StatusNotFound)
+		return
+	}
+	if info.IsDir() {
+		// The path is a directory, return a 404
+		ServeErrorPage(w, r, http.StatusNotFound)
+		return
+	}
+	http.ServeFile(w, r, filePath)
 }
 
 // ServeAbout handles GET requests to the /about URL.

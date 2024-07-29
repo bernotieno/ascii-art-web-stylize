@@ -8,12 +8,15 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    color: #050404;
-    background-color: #FFFFFF;
+    /* color: #050404; */
+    background-image: url(/static/images/file.jpg);
+    background-size: cover;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 100vh;   
 }
+
+
 
 /* Header and navigation */
 header {
@@ -39,11 +42,17 @@ nav ul li a {
     font-weight: bold;
 }
 
+
+
+nav ul li a:hover {
+    color: #fbfdfe;
+}
+
 nav ul li a.active {
     color: #1c6abe;
 }
 
-/* Main content */
+
 main {
     flex: 1;
     padding: 2rem;
@@ -62,15 +71,22 @@ h2 {
     margin-bottom: 1rem;
 }
 
-/* Form styles */
+
 form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    background: #8b8787;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(46, 43, 43, 0.777);
+    width: 80%;
+    max-width: 900px;
+    margin: 80px auto;
 }
 
+
 label {
-    margin-bottom: 0.5rem;
+    display:-webkit-flex;
+    margin-bottom: 8px;
+    font-weight:bolder;
 }
 
 textarea, select {
@@ -103,6 +119,12 @@ button, .button {
     transition: transform 0.3s ease, background-color 0.3s ease; 
 }
 
+p, li {
+    font-weight:bold;
+    color: #020614;
+}
+
+
 button:hover, .button:hover {
     background-color: #0056b3;
     transform: translateY(-5px);
@@ -117,6 +139,7 @@ button:hover, .button:hover {
     color:#000000;
     margin-bottom: 1rem;
     width: 100%;
+    
 }
 
 pre, .scrollable-result {
@@ -126,6 +149,12 @@ pre, .scrollable-result {
     word-wrap: break-word;
 }
 
+.input {
+    max-height: 20vh; 
+    overflow: auto;
+    border: 1px solid #ccc; 
+    white-space: pre-wrap;
+}
 .art {
     font-family: monospace;
     white-space: pre;
